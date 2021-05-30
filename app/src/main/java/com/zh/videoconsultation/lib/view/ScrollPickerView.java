@@ -1,8 +1,21 @@
 package com.zh.videoconsultation.lib.view;
 
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.zh.videoconsultation.R;
+import com.zh.videoconsultation.lib.IPickerViewOperation;
+import com.zh.videoconsultation.lib.util.ScreenUtil;
 
 public class ScrollPickerView extends RecyclerView {
     private Runnable mSmoothScrollTask;
@@ -45,6 +58,7 @@ public class ScrollPickerView extends RecyclerView {
         if (!mFirstAmend) {
             mFirstAmend = true;
             ((LinearLayoutManager) getLayoutManager()).scrollToPositionWithOffset(getItemSelectedOffset(), 0);
+//            getLayoutManager().scrollToPositionWithOffset(getItemSelectedOffset(), 0);
         }
     }
 

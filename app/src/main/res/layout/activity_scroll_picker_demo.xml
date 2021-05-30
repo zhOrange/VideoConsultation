@@ -3,10 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScrollPickerDemoActivity">
-    <top.defaults.view.PickerView
-        android:id="@+id/pickerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    android:gravity="center"
+    tools:context=".ScrollPickerDemoActivity"
+    android:orientation="horizontal">
+    <com.zh.videoconsultation.lib.view.ScrollPickerView
+        android:id="@+id/scroll_picker_view_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.zh.videoconsultation.lib.view.ScrollPickerView>
+    <com.zh.videoconsultation.lib.view.ScrollPickerView
+        android:id="@+id/scroll_picker_view_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.zh.videoconsultation.lib.view.ScrollPickerView>
 
 </LinearLayout>

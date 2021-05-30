@@ -1,8 +1,12 @@
 package com.zh.videoconsultation.lib.provider;
 
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.graphics.Color;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.zh.videoconsultation.R;
 import com.zh.videoconsultation.lib.IViewProvider;
@@ -10,7 +14,7 @@ import com.zh.videoconsultation.lib.IViewProvider;
 public class DefaultItemViewProvider implements IViewProvider<String> {
     @Override
     public int resLayout() {
-        return R.layout.scroll_picker_default_item_layout;
+        return R.layout.scroll_pircker_textitem_layout;
     }
 
     @Override
