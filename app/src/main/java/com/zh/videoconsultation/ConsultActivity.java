@@ -56,7 +56,10 @@ public class ConsultActivity extends AppCompatActivity {
             public void onClick(View view) {
                 btnOrder.setEnabled(false);
                 btnCall.setEnabled(true);
+                Intent intent = new Intent(ConsultActivity.this, ScrollPickerDemoActivity.class);
+                startActivity(intent);
                 Toast.makeText(ConsultActivity.this, "成功预约 " + consultName + "顾问！", Toast.LENGTH_SHORT).show();
+
             }
         });
         btnCall.setOnClickListener(new View.OnClickListener() {
