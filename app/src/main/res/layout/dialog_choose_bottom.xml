@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textColor="@color/coral"
+            android:textSize="15dp"
+            android:layout_alignParentStart="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确认"
+            android:textColor="@color/aqua"
+            android:textSize="15dp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <com.zh.videoconsultation.lib.view.ScrollPickerView
+            android:id="@+id/scroll_picker_view_week_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.zh.videoconsultation.lib.view.ScrollPickerView>
+        <com.zh.videoconsultation.lib.view.ScrollPickerView
+            android:id="@+id/scroll_picker_view_duration_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.zh.videoconsultation.lib.view.ScrollPickerView>
+
+    </LinearLayout>
+</LinearLayout>
