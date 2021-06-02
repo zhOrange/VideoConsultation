@@ -139,9 +139,10 @@ public class ConsultActivity extends AppCompatActivity {
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
 
-        bottomDialog.show();
-        initView();
+        initView(contentView);
         initData();
+        bottomDialog.show();
+
     }
 
     private void show2() {
@@ -157,10 +158,10 @@ public class ConsultActivity extends AppCompatActivity {
         bottomDialog.show();
     }
 
-    private void initView() {
-        mScrollPickerViewWeek = findViewById(R.id.scroll_picker_view_week_1);
+    private void initView(View view) {
+        mScrollPickerViewWeek = view.findViewById(R.id.scroll_picker_view_week_1);
 //        mScrollPickerViewWeek = findViewById(R.id.scroll_picker_view_week_1);
-        mScrollPickerViewDuration = findViewById(R.id.scroll_picker_view_duration_1);
+        mScrollPickerViewDuration = view.findViewById(R.id.scroll_picker_view_duration_1);
         if(mScrollPickerViewWeek != null){
             mScrollPickerViewWeek.setLayoutManager(new LinearLayoutManager(this));
         }
