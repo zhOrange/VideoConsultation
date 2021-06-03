@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConsultActivity extends AppCompatActivity {
+    private static final String TAG = "ConsultActivity";
     private ScrollPickerView mScrollPickerViewWeek;
     private ScrollPickerView mScrollPickerViewDuration;
 
@@ -77,7 +79,8 @@ public class ConsultActivity extends AppCompatActivity {
 //                Intent intent = new Intent(ConsultActivity.this, ScrollPickerDemoActivity.class);
 //                startActivity(intent);
 
-                show1();
+//
+                pickOrderTime();
                 Toast.makeText(ConsultActivity.this, "成功预约 " + consultName + "顾问！", Toast.LENGTH_SHORT).show();
 
             }
@@ -128,26 +131,22 @@ public class ConsultActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void show1() {
+//    private void show2() {
+//        Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
+//        View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_circle, null);
+//        bottomDialog.setContentView(contentView);
+//        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+//        params.width = getResources().getDisplayMetrics().widthPixels - DensityUtil.dp2px(ConsultActivity.this, 16f);
+//        params.bottomMargin = DensityUtil.dp2px(ConsultActivity.this, 8f);
+//        contentView.setLayoutParams(params);
+//        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+//        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+//        bottomDialog.show();
+//    }
 
+    private void pickOrderTime(){
         Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_choose_bottom, null);
-        bottomDialog.setContentView(contentView);
-        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-        contentView.setLayoutParams(layoutParams);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-
-        initView(contentView);
-        initData();
-        bottomDialog.show();
-
-    }
-
-    private void show2() {
-        Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_circle, null);
         bottomDialog.setContentView(contentView);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
         params.width = getResources().getDisplayMetrics().widthPixels - DensityUtil.dp2px(ConsultActivity.this, 16f);
@@ -155,20 +154,11 @@ public class ConsultActivity extends AppCompatActivity {
         contentView.setLayoutParams(params);
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
-    }
 
-    private void initView(View view) {
-        mScrollPickerViewWeek = view.findViewById(R.id.scroll_picker_view_week_1);
-//        mScrollPickerViewWeek = findViewById(R.id.scroll_picker_view_week_1);
-        mScrollPickerViewDuration = view.findViewById(R.id.scroll_picker_view_duration_1);
-        if(mScrollPickerViewWeek != null){
-            mScrollPickerViewWeek.setLayoutManager(new LinearLayoutManager(this));
-        }
+        mScrollPickerViewWeek = contentView.findViewById(R.id.scroll_picker_view_week_1);
+        mScrollPickerViewDuration = contentView.findViewById(R.id.scroll_picker_view_duration_1);
+        mScrollPickerViewWeek.setLayoutManager(new LinearLayoutManager(this));
         mScrollPickerViewDuration.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void initData() {
         List<String> weekList, durationList;
         String[] weeks = {"周一", "周二","周三","周四","周五","周六","周日"};
         String[] durations =   {"08:00 ~ 08.30", "08:30 ~ 09.00",
@@ -183,14 +173,37 @@ public class ConsultActivity extends AppCompatActivity {
                 "17:00 ~ 17.30", "17:30 ~ 18.00"};
         weekList = Arrays.asList(weeks);
         durationList = Arrays.asList(durations);
-//        for (int i = 0; i < 20; i++) {
-//            String itemData = "item: " + i;
-//            weekList.add(itemData);
-//        }
+        initScrollPickerView(mScrollPickerViewWeek, weekList);
+        initScrollPickerView(mScrollPickerViewDuration, durationList);
+        TextView cancle = contentView.findViewById(R.id.dialogcancle);
+        TextView ok = contentView.findViewById(R.id.dialogok);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ConsultActivity.this, "取消", Toast.LENGTH_SHORT).show();
+                bottomDialog.dismiss();
+            }
+        });
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ConsultActivity.this, "确认", Toast.LENGTH_SHORT).show();
+                bottomDialog.dismiss();
+            }
+        });
 
-        ScrollPickerAdapter.ScrollPickerAdapterBuilder<String> weekBuilder =
+        bottomDialog.show();
+    }
+
+    /**
+     * 初始化 滚动选择器
+     * @param mScrollPickerView      picker view
+     * @param list                   选择内容
+     */
+    private void initScrollPickerView(ScrollPickerView mScrollPickerView, List list){
+        ScrollPickerAdapter.ScrollPickerAdapterBuilder builder =
                 new ScrollPickerAdapter.ScrollPickerAdapterBuilder<String>(this)
-                        .setDataList(weekList)
+                        .setDataList(list)
                         .selectedItemOffset(1)
                         .visibleItemNumber(3)
                         .setDivideLineColor("#E5E5E5")
@@ -204,25 +217,7 @@ public class ConsultActivity extends AppCompatActivity {
                                 }
                             }
                         });
-        ScrollPickerAdapter.ScrollPickerAdapterBuilder<String> durationBuilder =
-                new ScrollPickerAdapter.ScrollPickerAdapterBuilder<String>(this)
-                        .setDataList(durationList)
-                        .selectedItemOffset(1)
-                        .visibleItemNumber(3)
-                        .setDivideLineColor("#E5E5E5")
-                        .setItemViewProvider(null)
-                        .setOnClickListener(new ScrollPickerAdapter.OnClickListener() {
-                            @Override
-                            public void onSelectedItemClicked(View v) {
-                                String text = (String) v.getTag();
-                                if (text != null) {
-                                    Toast.makeText(ConsultActivity.this, text, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-        ScrollPickerAdapter mScrollPickerAdapterWeek = weekBuilder.build();
-        ScrollPickerAdapter mScrollPickerAdapterDuration = durationBuilder.build();
-        mScrollPickerViewWeek.setAdapter(mScrollPickerAdapterWeek);
-        mScrollPickerViewDuration.setAdapter(mScrollPickerAdapterDuration);
+        ScrollPickerAdapter mScrollPickerAdapter = builder.build();
+        mScrollPickerView.setAdapter(mScrollPickerAdapter);
     }
 }
